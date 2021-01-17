@@ -4,6 +4,7 @@ import java.util.*;
 import io.advantageous.qbit.annotation.PathVariable;
 import io.advantageous.qbit.annotation.RequestMapping;
 import io.advantageous.qbit.annotation.RequestMethod;
+import lombok.extern.slf4j.Slf4j;
 
 /* List the Entities
  * Send Entity to Root and SubEntity
@@ -11,10 +12,10 @@ import io.advantageous.qbit.annotation.RequestMethod;
  * Get list of SubEntities
  * Get the key-value data of the Entity
  */
-
+@Slf4j
 @RequestMapping("/entity")
 public class EntityData {
-// List to get list of Entites	
+// List to get list of Entities	
     private List<Entity> entityEntries = new ArrayList<>();
 //Map to store the Entity data
     private HashMap<String, Entity> entityData = new HashMap<>();
@@ -23,6 +24,8 @@ public class EntityData {
    
     @RequestMapping(value = "/sendRoot", method = RequestMethod.POST)
     public void sendRoot(final EntityClass ent) {
+    	log.debug("sendRoot: {}", ent.getID());
+
     	entityEntries.add(ent);
     	entityData.put(ent.getID(), ent);
     }
@@ -73,7 +76,7 @@ public class EntityData {
 
         entityValues.put("Entity1", "Value1");
         entityValues.put("Entity2","Value2");
-        Entity eVAl = EntityClass.builder().ID("ent2").data(entityValues).build();
+        Entity eVAl = EntityClass.builder().ID("ID3").data(entityValues).build();
         entityEntries.add(eVAl);
         entityData.put(eVAl.getID(), eVAl);
     }
