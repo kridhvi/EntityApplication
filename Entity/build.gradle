@@ -5,44 +5,54 @@
  * For more details take a look at the 'Building Java & JVM projects' chapter in the Gradle
  * User Manual available at https://docs.gradle.org/6.7.1/userguide/building_java_projects.html
  */
+
  buildscript {
     repositories {
         mavenCentral()
         jcenter()
     }
 }
+plugins {
+    // Apply the java-library plugin for API and implementation separation.
+    id 'java-library'
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+
+mainClassName = 'EntityApp.EntityMain'
 
 // tag::repositories[]
 repositories {
+ // Use JCenter for resolving dependencies.
     jcenter()
     mavenCentral()
     }
 // end::repositories[]
 
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'application'
-
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+version = '1.0'
 
 repositories {
     mavenCentral()
 }
 
-mainClassName = 'EntityApp.EntityMain'
-
 
 dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.16'
     annotationProcessor 'org.projectlombok:lombok:1.18.16'  
-    compile 'io.advantageous.qbit:qbit-admin:1.10.0.RELEASE'
-    compile 'io.advantageous.qbit:qbit-vertx:1.10.0.RELEASE'
+    compile 'io.advantageous.qbit:qbit-admin:1.10.7'
+    compile 'io.advantageous.qbit:qbit-vertx:1.10.7'
     compile 'io.vertx:vertx-core:3.2.1'   
-    testCompile 'junit:junit:4.12' 
-    testCompile 'com.google.guava:guava:21.0'
+    compile 'org.slf4j:slf4j-api:1.7.24'
+    compile 'org.slf4j:slf4j-simple:1.6.1'
+    // Use JUnit test framework.
+    testImplementation 'junit:junit:4.13' 
+    implementation 'com.google.guava:guava:29.0-jre'
 }
 
 task wrapper(type: Wrapper) {
